@@ -1,0 +1,290 @@
+﻿@model Project.Web.Models.DashboardModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutPage_Merchant.cshtml";
+}
+
+
+
+<section class="content-header">
+    <h1>Merchant Dashboard</h1>
+    <!--<span class="breadcrumb"><strong><i>DEMONSTRATION</i></strong></span>-->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <span class="mini-stat-icon"><i class="ion ion-stats-bars"></i></span>
+                <div class="inner">
+                    @if (Model.TotalRevenue == "")
+                    {
+                        <h3>
+                          $0
+                        </h3>
+                    }
+                    else
+                    {
+                        <h3>
+                           $@Model.TotalRevenue
+                        </h3>
+                    }  
+                    <p>
+                        Total Revenue
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <span class="mini-stat-icon"><i class="ion ion-person-add"></i></span>
+                    <h3>
+                        @Model.TotalCustomer
+                    </h3>
+                    <p>
+                        Total Customer
+
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <span class="mini-stat-icon"><i class="ion ion-pie-graph"></i></span>
+                    <h3>
+                        @Model.TotalTransactions
+                    </h3>
+                    <p>
+                        No of Transactions
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <span class="mini-stat-icon"><i class="ion ion-card"></i></span>
+                    <h3>
+                        $@Model.TotaEsCustDue
+                    </h3>
+                    <p>
+                        Amount due to Cardholders - 1%
+
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <span class="mini-stat-icon"><i class="ion ion-card"></i></span>
+                    <h3>
+                        $@Model.TotalEsAdminDue
+                    </h3>
+                    <p>
+                        Amount due to EasySave - 2%
+
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <span class="mini-stat-icon"><i class="ion ion-card"></i></span>
+                    <h3>
+                        $@Model.TotalDue
+                    </h3>
+                    <p>
+                        Total Payment To EasySave - 3%
+
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- top row -->
+    
+    <!-- /.row -->
+    <!--Promotion start-->
+    <!--Promotion end-->
+    <!-- Main row -->
+    
+    <!-- /.Left col -->
+    <div class="row">
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-12 connectedSortable">
+            <div class="box">
+                <div class="box-header">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title">Customer Leader Board</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table class="table table-bordered table-striped" id="example1">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Mobile</th>
+                                <th>Card Number</th>
+                                <th>Total Visits</th>
+                                <th>Total Sale</th>
+                                <th>Points Awarded</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cust in Model.customer)
+                            {
+                                <tr>
+                                    <td>@cust.FirstName @cust.LastName</td>
+                                    <td>@cust.Mobile</td>
+                                    <td>@cust.CardNo</td>
+                                    <td>@cust.TotalVisit</td>
+                                    <td>
+                                        <span class='lb-txt-green-bold'>@cust.TotalSale</span>
+                                    </td>
+                                    <td>
+                                        @if (cust.MyPoints != "")
+                                        {
+                                            <span class='lb-txt-blue-bold'>@cust.MyPoints p</span>
+                                        }
+                                        else
+                                        {
+                                            <span class='lb-txt-blue-bold'>0 p</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </section>
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+</section>
+<!-- /.content -->
+
+
+
+<!-- page script -->
+<script type="text/javascript">
+    $(function () {
+        // $("#example1").dataTable();
+        $('#example1').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": false,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+    });
+</script>
+<!-- page script -->
+<!-- page script -->
+<script type="text/javascript">
+    $(function () {
+        "use strict";
+
+        // AREA CHART
+        var area = new Morris.Area({
+            element: 'revenue-chart',
+            resize: true,
+            data: [
+                { y: '2016-04-01', item1: 0, item2: 0 }, { y: '2016-04-02', item1: 0, item2: 0 }, { y: '2016-04-03', item1: 0, item2: 0 }, { y: '2016-04-04', item1: 995, item2: 1839 }, { y: '2016-04-05', item1: 0, item2: 0 }, { y: '2016-04-06', item1: 0, item2: 0 }, { y: '2016-04-07', item1: 0, item2: 0 }, { y: '2016-04-08', item1: 8353, item2: 9528 }, { y: '2016-04-09', item1: 0, item2: 0 }, { y: '2016-04-10', item1: 0, item2: 0 }, { y: '2016-04-11', item1: 0, item2: 0 }, { y: '2016-04-12', item1: 0, item2: 0 }, { y: '2016-04-13', item1: 0, item2: 0 }, { y: '2016-04-14', item1: 0, item2: 0 }, { y: '2016-04-15', item1: 25, item2: 25 }, { y: '2016-04-16', item1: 0, item2: 0 }, { y: '2016-04-17', item1: 0, item2: 0 }, { y: '2016-04-18', item1: 0, item2: 0 }, { y: '2016-04-19', item1: 0, item2: 0 }, { y: '2016-04-20', item1: 2500, item2: 2600 }, { y: '2016-04-21', item1: 16350, item2: 14050 }, { y: '2016-04-22', item1: 0, item2: 0 }, { y: '2016-04-23', item1: 0, item2: 0 }, { y: '2016-04-24', item1: 0, item2: 0 }, { y: '2016-04-25', item1: 0, item2: 0 }, { y: '2016-04-26', item1: 0, item2: 0 }, { y: '2016-04-27', item1: 0, item2: 0 }, { y: '2016-04-28', item1: 0, item2: 0 }, { y: '2016-04-29', item1: 0, item2: 0 }, { y: '2016-04-30', item1: 0, item2: 0 }
+            ],
+            xkey: 'y',
+            ykeys: ['item1', 'item2'],
+            labels: ['Total Sale', 'Total Points'],
+            lineColors: ['#a0d0e0', '#3c8dbc'],
+            hideHover: 'auto'
+        });
+
+        // LINE CHART
+        var line = new Morris.Line({
+            element: 'line-chart',
+            resize: true,
+            data: [
+                { y: '2011 Q1', item1: 2666 },
+                { y: '2011 Q2', item1: 2778 },
+                { y: '2011 Q3', item1: 4912 },
+                { y: '2011 Q4', item1: 3767 },
+                { y: '2012 Q1', item1: 6810 },
+                { y: '2012 Q2', item1: 5670 },
+                { y: '2012 Q3', item1: 4820 },
+                { y: '2012 Q4', item1: 15073 },
+                { y: '2013 Q1', item1: 10687 },
+                { y: '2013 Q2', item1: 8432 }
+            ],
+            xkey: 'y',
+            ykeys: ['item1'],
+            labels: ['Item 1'],
+            lineColors: ['#3c8dbc'],
+            hideHover: 'auto'
+        });
+
+        //DONUT CHART
+        var donut = new Morris.Donut({
+            element: 'sales-chart',
+            resize: true,
+            colors: ["#3c8dbc", "#f56954", "#00a65a"],
+            data: [
+                { label: "Download Sales", value: 12 },
+                { label: "In-Store Sales", value: 30 },
+                { label: "Mail-Order Sales", value: 20 }
+            ],
+            hideHover: 'auto'
+        });
+        //BAR CHART
+        var bar = new Morris.Bar({
+            element: 'bar-chart',
+            resize: true,
+            data: [
+                { y: '2006', a: 100, b: 90 },
+                { y: '2007', a: 75, b: 65 },
+                { y: '2008', a: 50, b: 40 },
+                { y: '2009', a: 75, b: 65 },
+                { y: '2010', a: 50, b: 40 },
+                { y: '2011', a: 75, b: 65 },
+                { y: '2012', a: 100, b: 90 }
+            ],
+            barColors: ['#00a65a', '#f56954'],
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['CPU', 'DISK'],
+            hideHover: 'auto'
+        });
+    });
+</script>
+
+
+

@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Flyer</th>
+            <th class="text-center">Flyers Image</th>
+            <th class="text-center">Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var flier in Model.fliers)
+        {
+            <tr>
+                <td class="text-center">
+                    <div class="imgLiquid text-center" style="width:50px; height:50px;">
+                        <img alt="@flier.FlierImage" src="../Uploads/Flier_Img/@flier.FlierImage" style="width:50px; height:50px;" />
+                    </div>
+                </td>
+                <td class="text-center">@flier.FlierImage</td>
+                <td class="text-center">
+                    @if (@flier.Status == "Deactive")
+                    {
+                        <span class="label label-danger">@flier.Status</span>
+                    }
+                    else
+                    {
+                        <span class="label label-success">@flier.Status</span>
+                    }
+                </td>
+                <td class="text-center">
+                    @if (@flier.Status == "Deactive")
+                    {
+                        <button type="button" class="btn btn-outline btn-primary" onclick="ChangeStatus('@flier.Flier_ID');" title="Activate Flyer">Active</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-outline btn-warning" onclick="ChangeStatus('@flier.Flier_ID');" title="Deactive Flyer">Deactive</button>
+                    }
+
+                    <button type="button" class="btn btn-outline btn-danger" onclick="DeleteFlier('@flier.Flier_ID','@flier.FlierImage');" title="Delete Flyer">Delete</button>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+
+</table>

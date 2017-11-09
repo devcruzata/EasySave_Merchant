@@ -1,0 +1,199 @@
+﻿
+@model Project.Web.Models.FliersModel
+
+<section class="content-header">
+    <h1>Add Flyers</h1>
+    <!--<span class="breadcrumb"><strong><i>DEMONSTRATION</i></strong></span>-->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form action="/Cards/GenreateCards" method="post" id="fform">
+                    <table class="no-border">
+                        <tr>
+                            <td class="text-left"><b>Choose Flyer</b></td>
+                            <td class="text-right">
+                                <input type="file" id="FImage" class="form-control" />                               
+                            </td>
+                            <td><p> (Image Size Should be of 1400 x 1525 pixels.)</p></td>
+                        </tr>                        
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <input type="button" class="btn btn-primary" value="Add" onclick="AddFlier();" />
+                            </td>
+                        </tr>
+                    </table>
+                    @*<input type="hidden" name="CardNo_Prefix" id="CardNo_Prefix" value="" />*@
+                    <input type="hidden" name="Barcode_dir" id="Barcode_dir" />
+                </form>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+
+    
+
+    <div class="row" style="margin-top:20px;">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Flyers List</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive" id="flierTable">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Flyer</th>
+                                <th class="text-center">Flyers Image</th>
+                                <th class="text-center">Status</th>                                
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                            @foreach (var flier in Model.fliers)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="" style="width:50px; height:50px;">
+                                            <img alt="@flier.FlierImage" src="../Uploads/Flier_Img/@flier.FlierImage" style="width:50px; height:50px;" />
+                                        </div>
+                                    </td>
+                                    <td class="text-center">@flier.FlierImage</td>                                    
+                                    <td class="text-center">
+                                        @if (@flier.Status == "Deactive")
+                                        {
+                                            <span class="label label-danger">@flier.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-success">@flier.Status</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (@flier.Status == "Deactive")
+                                        {
+                                            <button type="button" class="btn btn-outline btn-primary" onclick="ChangeStatus('@flier.Flier_ID');" title="Activate Flyer">Active</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-outline btn-warning" onclick="ChangeStatus('@flier.Flier_ID');" title="Deactive Flyer">Deactive</button>
+                                        }
+                                       
+                                        <button type="button" class="btn btn-outline btn-danger" onclick="DeleteFlier('@flier.Flier_ID','@flier.FlierImage');" title="Delete Flyer">Delete</button>
+                                    </td>
+                                </tr>
+                            }                         
+                                                          
+
+                        </tbody>
+
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+</section>
+<!-- /.content -->
+
+<script>
+    function AddFlier() {
+        // Checking whether FormData is available in browser 
+       
+        if (window.FormData !== undefined) {
+
+            var fileUpload = $("#FImage").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object  
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object  
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object  
+            //fileData.append('Comment', $("#txtDescription").val());
+           // fileData.append('Estimate_ID', $("#Estimate_ID").val());
+            // $("#loader").show();
+           
+            if ($("#FImage").val() != '') {
+                $.ajax({
+                    url: '/Home/AddFliersImage',
+                    type: "POST",
+                    contentType: false, // Not to set any content header  
+                    processData: false, // Not to process data  
+                    data: fileData,
+                    success: function (data) {
+                        if (data != '') {
+                            // window.location = '/Estimate/ViewEstimate?Estimate_ID_PK=' + Estimation_ID_Auto_PK
+                            //   $("#loader").hide();
+                            $("#fform")[0].reset();
+                            $("#flierTable").html('');
+                            $("#flierTable").html(data);
+                        }
+                        else {
+                            // $("#loader").hide();
+                            // $('#errorMessage').html(data.errorMessage);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }            
+        } else {
+            alert("FormData is not supported.");
+        }
+    }
+</script>
+
+<script>
+    function DeleteFlier(Flier_ID_Auto_PK, FlierNam) {
+
+        var result = confirm("Are you sure to delete this Flier ?");
+        if (result == true) {
+            // var divId = "div-" + Service_ID_Auto_PK;
+
+            var Fdata = Flier_ID_Auto_PK;           
+            var url = "/Home/DeleteFlier";
+            $.post("/Home/DeleteFlier", { Flier_ID_PK: Fdata, FlierImageName: FlierNam }, function (data) {
+                if (data != "") {
+                    $("#flierTable").html('');
+                    $("#flierTable").html(data);
+                }
+                if (data = "") {
+                    $("#error_msg_tbl").html("<p style=\"color:red;\">There is an error in processing your request. Please Try after some time.</p>");
+                    $("#error_msg_tbl").show();
+                }
+            });
+        }
+    }
+
+    function ChangeStatus(Flier_ID_Auto_PK) {
+
+        // var divId = "div-" + Service_ID_Auto_PK;
+
+        var Fdata = Flier_ID_Auto_PK;
+
+        var url = "/Home/ChangeFlierStatus";
+        $.post(url, { Flier_ID_PK: Fdata }, function (data) {
+            if (data != "") {
+                $("#flierTable").html('');
+                $("#flierTable").html(data);
+            }
+            if (data = "") {
+                $("#error_msg_tbl").html("<p style=\"color:red;\">There is an error in processing your request. Please Try after some time.</p>");
+                $("#error_msg_tbl").show();
+            }
+        });
+
+    }
+</script>

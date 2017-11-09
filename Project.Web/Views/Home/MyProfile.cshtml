@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "MyProfile";
+}
+
+
+<section class="content-header">
+    <h1>My Profile</h1>
+    <!--<span class="breadcrumb"><strong><i>DEMONSTRATION</i></strong></span>-->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <form action="/Home/MyProfile" method="post" enctype="multipart/form-data" id="merchantForm">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="no-border" style="margin-left:150px;">
+                    <tr>
+                        <td colspan="4" class="text-left"><h3>Organization Details</h3></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><b>Organization Name</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="OrganijationName" name="OrganijationName" value="@Model.OrganijationName" />
+                            <div id="error_div_OrganijationName" style="display:none;">
+                                <p style="color:red">Please Enter Organization Name</p>
+                            </div>
+                        </td>
+                        @*<td class="text-left"><b>Organijation Code</b></td>
+                            <td>
+                                <input type="text" class="form-control form-cutom" id="OrganijationCode" name="OrganijationCode" value="@ViewBag.OrganijationCode" readonly />
+                            </td>*@
+                    </tr>
+                    <tr>
+                        <td class="text-left"><b>Address Line1</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="AddressLine1" name="AddressLine1" value="@Model.AddressLine1" />
+                            <div id="error_div_AddressLine1" style="display:none;">
+                                <p style="color:red">Please Enter Address Line 1</p>
+                            </div>
+                        </td>
+                        <td class="text-left"><b>Address Line2</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="AddressLine2" name="AddressLine2" value="@Model.AddressLine2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" width="auto"><b>City</b></td>
+                        <td width="auto">
+                            <input type="text" class="form-control form-cutom" id="City" name="City" value="@Model.City" />
+                            <div id="error_div_City" style="display:none;">
+                                <p style="color:red">Please Enter City</p>
+                            </div>
+                        </td>
+                        <td class="text-left" width="auto"><b>State</b></td>
+                        <td width="auto">
+                            <input type="text" class="form-control form-cutom" id="State" name="State" value="@Model.State" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" width="auto"><b>Country</b></td>
+                        <td width="auto">
+                            <select class="input-medium bfh-countries form-control form-cutom" data-country="US" id="Countary" name="Countary"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" width="auto"><b>Logo</b></td>
+                        <td width="auto" id="logoTxt">
+                            <input type="text" class="form-control form-cutom" name="Merchant_Logo" value="@Model.Merchant_Logo" readonly /><a href="#" id="ledit" onclick="showLogoDiv();">Edit</a>
+                        </td>
+                        <td width="auto" id="fLogo" style="display:none;">
+                            <input type="file" class="form-control form-cutom" id="Logo" name="Logo" />
+                        </td>
+                        <td class="text-left" width="auto"><b>Image</b></td>
+                        <td width="auto" id="imgTxt">
+                            <input type="text" class="form-control form-cutom" name="Merchant_Image" value="@Model.Merchant_Image" readonly /><a href="#" id="iedit" onclick="showImageDiv();">Edit</a>
+                        </td>
+                        <td width="auto" id="fImg" style="display:none;">
+                            <input type="file" class="form-control form-cutom" id="Image" name="Image" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-left"><h3>Contact Details</h3></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><b>Contact Person</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="ContactPerson" name="ContactPerson" value="@Model.ContactPerson" />
+                            <div id="error_div_ContactPerson" style="display:none;">
+                                <p style="color:red">Please Enter Contact Person Name</p>
+                            </div>
+                        </td>
+                        <td class="text-left"><b>Email</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="Email" name="Email" value="@Model.Email" readonly />
+                            <div id="error_div_Email" style="display:none;">
+                                <p style="color:red">Please Enter Valid Email</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><b>Mobile</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="Mobile" name="Mobile" onkeypress="return isNumberKey(event)" maxlength="13" value="@Model.Mobile" />
+                            <div id="error_div_Mobile" style="display:none;">
+                                <p style="color:red">Mobile no must be min 10 digit long</p>
+                            </div>
+                        </td>
+                        <td class="text-left"><b>Landline</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="Landline" name="Landline" onkeypress="return isNumberKey(event)" maxlength="14" value="@Model.Landline" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><b>Website Url</b></td>
+                        <td>
+                            <input type="text" class="form-control form-cutom" id="Website" name="Website" value="@Model.Website" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-right">
+                            <input type="button" class="btn btn-primary" value="Save" onclick="SubmitForm();" />
+                            <input type="button" class="btn btn-danger" value="Cancel" onclick="cancel();" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <input type="hidden" name="Merchant_ID" value="@Model.Merchant_ID" />
+    </form>
+
+    <!-- /.row -->
+
+
+</section>
+<!-- /.content -->
+
+<script>
+    function showLogoDiv() {
+        $("#logoTxt").hide();
+        $("#fLogo").show();
+    }
+
+    function showImageDiv() {
+        $("#imgTxt").hide();
+        $("#fImg").show();
+    }
+</script>
+<script>
+
+    function SubmitForm() {
+        if (ValidateForm()) {
+            $("#merchantForm").submit();
+        }
+    }
+
+    function ValidateForm() {
+
+        var emailRegex = /^[A-Za-z0-9._]*\@@[A-Za-z]*\.[A-Za-z]{2,5}$/;
+
+        if ($("#OrganijationName").val().trim() == "") {
+            $("#error_div_OrganijationName").show();
+            return false;
+        }
+        else if ($("#AddressLine1").val().trim() == "") {
+            $("#error_div_AddressLine1").show();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#City").val().trim() == "") {
+            $("#error_div_City").show();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#ContactPerson").val().trim() == "") {
+            $("#error_div_ContactPerson").show();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#Email").val().trim() == "") {
+            $("#error_div_Email").show();
+            $("#error_div_ContactPerson").hide();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#Email").val().trim() != "" && !emailRegex.test($("#Email").val().trim())) {
+            $("#error_div_Email").show();
+            $("#error_div_ContactPerson").hide();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#Mobile").val().trim() == "") {
+            $("#error_div_Mobile").show();
+            $("#error_div_Email").hide();
+            $("#error_div_ContactPerson").hide();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else if ($("#Mobile").val().trim() != "" && $("#Mobile").val().trim().length < 10) {
+            $("#error_div_Mobile").show();
+            $("#error_div_Email").hide();
+            $("#error_div_ContactPerson").hide();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return false;
+        }
+        else {
+            $("#error_div_Mobile").hide();
+            $("#error_div_Email").hide();
+            $("#error_div_ContactPerson").hide();
+            $("#error_div_City").hide();
+            $("#error_div_AddressLine1").hide();
+            $("#error_div_OrganijationName").hide();
+            return true;
+        }
+
+    }
+    function cancel() {
+
+    }
+
+
+</script>
+
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function zipCheck(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
+</script>

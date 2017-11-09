@@ -1,0 +1,16 @@
+﻿@model Project.Web.Models.UserModel
+           @{
+               Layout = null;
+           }
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+<form method="post" action="/Authentication/MerchantLogin" id="LoginForm">
+    <input type="hidden" name="UserName" value="@Model.UserName"/>
+    <input type="hidden" name="Password" value="@Model.Password"/>
+</form>
+
+<script>
+    $(document).ready(function () {
+               $("#LoginForm").submit();
+    });
+</script>

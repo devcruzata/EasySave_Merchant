@@ -1,0 +1,76 @@
+﻿@model Project.Web.Models.CustomerModel
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Customers List</h1>
+    <!--<span class="breadcrumb"><strong><i>DEMONSTRATION</i></strong></span>-->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- form start -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-body">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+    <div id="ContentPlaceHolder1_customerlistfull" class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Customers List</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Customer Name</th>
+                                <th class="text-center">Mobile Number</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Card Number</th>
+                                <th class="text-center">Points Balance</th>
+                                @*<th>Points Redeemed</th>*@
+                                <th class="text-center">Date Joined</th>
+                                <th class="text-center">Last Visit</th>
+                                @*<th>Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cust in Model.customer)
+                            {
+                             <tr>
+                                 <td class="text-center">
+                                     @*<a data-toggle='tooltip' data-placement='bottom' title='Click to view or edit customer information.' href='customer_registration.aspx?action=view&code=CST310316081904'>Mr. Carmen  Tripodi </a>*@
+                                     @cust.FirstName @cust.LastName
+                                 </td>
+                                 <td class="text-center">@cust.Mobile</td>
+                                 <td class="text-center">@cust.Email</td>
+                                 <td class="text-center">@cust.CardNo</td>
+                                 <td class='pts-bal text-center'>@cust.MyPoints p</td>                                
+                                 <td class="text-center">@cust.DateGenreated</td>
+                                 <td class="text-center">@cust.LastVisit</td>
+                                @*<td class='aw-rdm'>
+                                    <div class=''>
+                                      <a data-toggle='tooltip' data-placement='bottom' title='Click to award points.' href='sale_redeem.aspx?action=award&mob=7852547852&card=' class='btn btn-success btn-aw'><i class='fa fa-trophy'></i></a>
+                                      <a data-toggle='tooltip' data-placement='bottom' title='Click to redeem points.' href='sale_redeem.aspx?action=redeem&mob=7852547852&card=' class='btn btn-warning btn-rdm'><i class='fa fa-gift'></i></a>
+                                   </div>
+                                </td>*@
+                            </tr>
+                            }
+                                                        
+                        </tbody>
+
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
